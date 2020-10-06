@@ -18,6 +18,21 @@ type ListJobTemplatesResponse struct {
 	Results []*JobTemplate `json:"results"`
 }
 
+func (jt *JobTemplateService) GetJobTemplate(id int, params map[string]string) (*JobTemplate, error) {
+	result := new(JobTemplate)
+	endpoint := fmt.Sprintf("/api/v2/job_templates/%d/", id)
+	resp, err := jt.client.Requester.GetJSON(endpoint, result, params)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := CheckResponse(resp); err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 // ListJobTemplates shows a list of job templates.
 func (jt *JobTemplateService) ListJobTemplates(params map[string]string) ([]*JobTemplate, *ListJobTemplatesResponse, error) {
 	result := new(ListJobTemplatesResponse)
