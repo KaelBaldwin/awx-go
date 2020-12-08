@@ -338,6 +338,11 @@ type JobTemplate struct {
 	VaultCredential       interface{} `json:"vault_credential"`
 }
 
+// JobDelete represents the awx api job delete response.
+type JobDelete struct {
+	Detail string `json:"detail"`
+}
+
 // JobLaunch represents the awx api job launch.
 type JobLaunch struct {
 	Job                     int               `json:"job"`

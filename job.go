@@ -56,6 +56,22 @@ func (j *JobService) GetJob(id int, params map[string]string) (*Job, error) {
 	return result, nil
 }
 
+// DeleteJob deletes a job.
+func (j *JobService) DeleteJob(id int, params map[string]string) error {
+	result := new(JobDelete)
+	endpoint := fmt.Sprintf("/api/v2/jobs/%d", id)
+	resp, err := j.client.Requester.Delete(endpoint, result, params)
+	if err != nil {
+		return err
+	}
+
+	if err := CheckResponse(resp); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // CancelJob cancels a job.
 func (j *JobService) CancelJob(id int, data map[string]interface{}, params map[string]string) (*CancelJobResponse, error) {
 	result := new(CancelJobResponse)
